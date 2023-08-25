@@ -30,7 +30,14 @@ while True:
             break
         
         guess = str(input("Make a guess: "))
+        guess_len = len(guess)
+        if guess_len > 1:
+            print("You can only guess one letter at a time")
+            continue
         if guess in word:
+            if guess in word_guess:
+                print("You already guessed that")
+                continue
             print("Correct")
             
             #add the letters to word_guess in order they appear, but not change the existing letters
