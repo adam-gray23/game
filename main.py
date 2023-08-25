@@ -2,6 +2,7 @@ while True:
     
     guesses = 6
     word = "fart"
+    win = False
     
     length = len(word)
     
@@ -22,6 +23,12 @@ while True:
     print("\n")
 
     while guesses > 0:
+        
+        #check to see if all letters have been guessed
+        if "_" not in word_guess:
+            win = True
+            break
+        
         guess = str(input("Make a guess: "))
         if guess in word:
             print("Correct")
@@ -38,4 +45,9 @@ while True:
             print("You have " + str(guesses) + " guesses left")
     
     print("Game Over")
+    if win == False:
+        print("The word was " + word)
+        
+    else:
+        print("You win!")
     break
