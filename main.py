@@ -12,6 +12,7 @@ while True:
     #word_guess is a list the length of the word, with each letter as an underscore
     
     word_guess = []
+    wrong_guess = []
     
     for i in range(length):
         word_guess.append("_")
@@ -47,7 +48,11 @@ while True:
             #print word_guess as a string
             print(" ".join(word_guess))
         else:
+            if guess in wrong_guess:
+                print("You already guessed that")
+                continue
             guesses -= 1
+            wrong_guess.append(guess)
             print("Incorrect")
             print("You have " + str(guesses) + " guesses left")
     
