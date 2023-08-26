@@ -1,34 +1,20 @@
-while True:
-    
+import time
+import os
+import random
+from holder import HANGMANPICS
+
+def game(length, word_guess, wrong_guess, word):
     guesses = 6
-    word = "fart"
     win = False
     
-    length = len(word)
-    
-    print("Welcome to Hangman")
-    print("You have " + str(guesses) + " guesses")
-    
-    #word_guess is a list the length of the word, with each letter as an underscore
-    
-    word_guess = []
-    wrong_guess = []
-    
-    for i in range(length):
-        word_guess.append("_")
-    
-    for i in range(length):
-        print("_", end=" ")
-        
-
-    print("\n")
-
     while guesses > 0:
-        
+
         #check to see if all letters have been guessed
         if "_" not in word_guess:
             win = True
             break
+        
+        print(HANGMANPICS[6-guesses] + "\n")
         
         guess = str(input("Make a guess: "))
         guess_len = len(guess)
@@ -55,11 +41,67 @@ while True:
             wrong_guess.append(guess)
             print("Incorrect")
             print("You have " + str(guesses) + " guesses left")
+            #print the current guess
+            print(" ".join(word_guess))
     
+    game_over(win, word)
+
+def game_over(win, word):
     print("Game Over")
     if win == False:
         print("The word was " + word)
         
     else:
         print("You win!")
-    break
+
+
+def set_up(word):
+    length = len(word)
+    word_guess = []
+    wrong_guess = []
+    for i in range(length):
+        word_guess.append("_")
+    for i in range(length):
+        print("_", end=" ")
+        
+    print("\n")
+    
+    game(length, word_guess, wrong_guess, word)
+
+def choose_word():
+    #read file, store words in list, choose random word
+    l = []
+    with open("words.txt", "r") as f:
+        for line in f:
+            l.append(line.strip())
+    
+    word = random.choice(l)
+    return word
+
+def welcome():
+    
+    
+    os.system('cls')
+    print("Welcome to Hangman")
+    print("Please wait while your word is chosen...")
+    time.sleep(2)
+    os.system('cls')
+    
+    word = choose_word()
+    
+    print("Your word has been chosen")
+    print("You have 6 guesses")
+    
+    set_up(word)
+
+def loop():
+    while True:
+        welcome()
+        break
+
+def main():
+    loop()
+
+
+if __name__ == '__main__':
+    main()
